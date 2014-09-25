@@ -11,9 +11,9 @@ class Lf::Stream
       line = @input.gets
       break unless line
       row = Lf::Row.new(line)
-      row = @option.filters.reduce(row) { |a, e| e.apply(a) }
-      @output.puts row.to_s(@option[:format])
-      @output.flush if @option[:buffered]
+      row = @option.filters.reduce(row) { |a, e| a && e.apply(a) }
+      @output.puts(row.to_s(@option[:format])) if row
+      @output.flush unless @option[:buffered]
     end
   end
 end
