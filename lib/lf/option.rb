@@ -51,6 +51,10 @@ class Lf::Option < ::OptionParser
 
   # rubocop:disable MethodLength
   def configure_options
+		on('-r FILE', '--require FILE', 'Require a file') do |file|
+			require file
+		end
+
     on('-c', '--[no-]color', @input.isatty.class, 'Colored output') do |val|
       @options[:color] = val
     end
