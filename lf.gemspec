@@ -23,6 +23,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.1.0'
   spec.add_development_dependency 'aruba', '~> 0.6.1'
   spec.add_development_dependency 'rubocop', '~> 0.26.1'
+  spec.add_development_dependency 'simplecov', '~> 0.9.1'
+  spec.add_development_dependency 'cucumber', '~> 1.3.17'
 
   spec.add_dependency 'ltsv', '0.1.0'
 end

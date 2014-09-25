@@ -1,4 +1,16 @@
 #!/usr/bin/env ruby
 
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.command_name "binary #{Process.pid}"
+  SimpleCov.root(File.join(File.expand_path(File.dirname(__FILE__)), '..'))
+  SimpleCov.start do
+    filters.clear
+    add_filter 'features/'
+    add_filter 'spec/'
+    add_filter 'tmp/'
+  end
+end
+
 require 'lf'
 Lf::CLI.new(ARGV.dup).execute!
