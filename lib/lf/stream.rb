@@ -15,5 +15,7 @@ class Lf::Stream
       @output.puts(row.to_s(@option[:format])) if row
       @output.flush unless @option[:buffered]
     end
+  rescue Interrupt
+    @output.flush
   end
 end
