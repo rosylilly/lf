@@ -26,5 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.9.1'
   spec.add_development_dependency 'cucumber', '~> 1.3.17'
 
-  spec.add_dependency 'ltsv', '0.1.0'
+  spec.add_dependency 'ltsv', '~> 0.1.0'
+  spec.add_dependency 'terminal-table', '~> 1.4.5'
+  spec.add_dependency 'term-ansicolor', '~> 1.3.0'
 end

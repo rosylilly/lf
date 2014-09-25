@@ -1,4 +1,8 @@
 describe Lf::Row do
+  before do
+    Term::ANSIColor.coloring = false
+  end
+
   subject(:row) { described_class.new(ltsv_line) }
 
   describe '#initialize' do
