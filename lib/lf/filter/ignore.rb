@@ -1,6 +1,4 @@
 class Lf::Filter::Ignore < Lf::Filter
-  Lf::Filter[:ignore] = self
-
   def initialize(arg)
     @labels = arg.split(',').map(&:strip)
   end

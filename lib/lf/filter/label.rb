@@ -1,6 +1,4 @@
 class Lf::Filter::Label < Lf::Filter
-  Lf::Filter[:label] = self
-
   def initialize(arg)
     @labels = arg.split(',').map(&:strip)
   end
