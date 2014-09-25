@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
 
 require 'lf'
+Lf::CLI.new(ARGV.dup).execute!
