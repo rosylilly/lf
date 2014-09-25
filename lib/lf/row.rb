@@ -1,41 +1,22 @@
 require 'ltsv'
 require 'delegate'
-require 'term/ansicolor'
-require 'terminal-table'
 require 'lf'
+require 'lf/formatter'
 
 class Lf::Row < SimpleDelegator
-  include Term::ANSIColor
+  attr_reader :raw
 
   def initialize(line)
-    @raw = LTSV.parse(line.to_s.chomp)[0]
+    if line.is_a?(Hash)
+      @raw = line
+    else
+      @raw = LTSV.parse(line.to_s.chomp)[0]
+    end
+
     super(@raw)
   end
 
   def to_s(format = :ltsv)
-    case format.to_s.to_sym
-    when :table
-      to_s_with_table
-    else
-      to_s_with_ltsv
-    end
-  end
-
-  private
-
-  def to_s_with_table
-    rows = []
-    @raw.each_pair do |label, val|
-      rows << [green(label.to_s), cyan(val.to_s)]
-    end
-    Terminal::Table.new(rows: rows).to_s
-  end
-
-  def to_s_with_ltsv
-    cols = []
-    @raw.each_pair do |label, val|
-      cols << "#{green(label.to_s)}:#{cyan(val.to_s)}"
-    end
-    cols.join("\t")
+    Lf::Formatter[format.to_s.to_sym].format(self)
   end
 end

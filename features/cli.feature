@@ -31,5 +31,5 @@ Feature: Run lf command
       """
       tag:ayataka message:選ばれたのは綾鷹でした
       """
-    When I run `lf * test.ltsv`
+    When I run `lf test.ltsv`
     Then the output should contain "tag:ayataka"

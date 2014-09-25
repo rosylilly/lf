@@ -1,8 +1,10 @@
 require 'optparse'
 require 'lf'
+require 'lf/formatter'
+require 'lf/filter'
 
 class Lf::Option < ::OptionParser
-  SUPPORTED_FORMATS = %w(ltsv table)
+  SUPPORTED_FORMATS = Lf::Formatter::FORMATTERS.keys
 
   def self.parse(*args)
     new(*args).tap { |option| option.parse!(option.argv) }
@@ -14,11 +16,12 @@ class Lf::Option < ::OptionParser
     @options = {
       format: 'ltsv'
     }
+    @filters = []
 
     configure_options
   end
 
-  attr_reader :argv, :input, :output
+  attr_reader :argv, :input, :output, :filters
 
   def version
     Lf::VERSION
@@ -37,6 +40,7 @@ class Lf::Option < ::OptionParser
     super
 
     @input = open(@argv.pop, 'r') if File.file?(@argv.last.to_s)
+    @filters = Lf::Filter.parse(@argv)
   end
 
   def [](key)
@@ -52,7 +56,12 @@ class Lf::Option < ::OptionParser
     end
 
     on('-f FORMAT', '--format FORMAT', "Choose a format(#{SUPPORTED_FORMATS.join(', ')})") do |val|
+      val = val.to_s.to_sym
       @options[:format] = val if SUPPORTED_FORMATS.include?(val)
+    end
+
+    on('-b', '--[no-]buffered', TrueClass, 'Flush the output after each LTSV row') do |val|
+      @options[:buffered] = val
     end
 
     on_tail('-h', '--help', 'Show this message') do
