@@ -1,4 +1,3 @@
-require 'terminal-table'
 require 'lf'
 require 'lf/option'
 require 'lf/stream'
